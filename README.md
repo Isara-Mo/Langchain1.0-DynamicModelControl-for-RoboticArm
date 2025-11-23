@@ -1,3 +1,260 @@
+<div align="right">
+
+**Language / 语言**: [English](#) | [中文](#chinese-version)
+
+</div>
+
+# LangChain 1.0 Dynamic Model Control for Robotic Arm System
+
+An intelligent robotic arm control system built on LangChain v1.0, enabling multi-functional interaction between chat Q&A and automatic robotic arm control. The system implements dynamic model selection through the middleware's `wrap_model_call` mechanism, automatically switching between models of different capabilities based on user intent, significantly improving system response speed.
+
+## ✨ Features
+
+- 🤖 **Intelligent Intent Recognition**: Based on fine-tuned BERT model, accurately determines whether user input is "chat Q&A" or "robotic arm control command"
+- 🔄 **Dynamic Model Routing**: Automatically selects the most suitable model based on intent classification results, significantly reducing system response time through dynamic model selection
+  - **Chat Mode**: Uses `qwen-flash` for fast responses to daily Q&A
+  - **Control Mode**: Uses `qwen3-max` to handle complex robotic arm control tasks
+- 🦾 **Robotic Arm Control**: Supports various predefined actions and combined workflows
+- 🔧 **Simulation Mode**: Can run text classification and model selection functions normally without physical robotic arm hardware
+
+## 🚀 Quick Start
+
+### 1. Download Model Weights
+
+Download the ONNX weights of the text classification model from Hugging Face:
+
+```bash
+# Visit the following link to download bert_classifier.onnx
+https://huggingface.co/IsaraYu/Chat-Command_TextClassification
+```
+
+Place the downloaded `bert_classifier.onnx` file in the project root directory.
+
+### 2. Install Dependencies
+
+Using `uv` (recommended):
+
+```bash
+uv sync
+```
+
+Or using `pip`:
+
+```bash
+pip install -e .
+```
+
+### 3. Configure API Key
+
+1. Visit [Alibaba Cloud Bailian Console](https://bailian.console.aliyun.com/?tab=model#/api-key) to get your API Key
+2. Create a `.env` file in the project root directory
+3. Add the following configuration:
+
+```env
+DASHSCOPE_API_KEY=your_api_key_here
+```
+
+### 4. Run the Program
+
+```bash
+python langchain_onnx_qwen.py
+```
+
+### Workflow
+
+```
+User Input 
+  ↓
+BERT Text Classification Model (judge chat/command)
+  ↓
+Dynamic Routing Middleware
+  ├─ chat → qwen-flash (fast response)
+  └─ command → qwen3-max (precise control)
+  ↓
+Agent Processing
+  ↓
+Robotic Arm Execution (if command and successfully recognized)
+```
+
+## 📋 System Requirements
+
+- Python >= 3.13
+- Environment supporting ONNX Runtime
+- (Optional) Yabo robotic arm hardware and Arm_Lib library
+
+## 📖 Usage
+
+### Basic Commands
+
+- Enter natural language commands to control the robotic arm
+- Enter `list` to view all supported actions
+- Enter `quit` to exit the program
+
+### Supported Actions
+
+**Basic Actions**:
+- Initialize/Reset
+- Ready
+- Grab/Clamp
+- Release
+- Move Up
+
+**Color Actions**:
+- Yellow/Red/Green/Blue
+
+**Combined Workflows**:
+- Full Grab Sequence
+- Sort Yellow/Red/Green/Blue
+
+### Example Dialogues
+
+```
+Please enter command: Help me take away the red one
+>>> Robotic arm executing: [Sort Red]
+
+Please enter command: What's the weather like today?
+The weather is sunny and the temperature is pleasant.
+
+Please enter command: Initialize robotic arm
+>>> Robotic arm executing: [Initialize]
+```
+
+## 🔧 Technical Details
+
+### Text Classification Model
+
+- **Base Model**: `bert-base-chinese`
+- **Training Method**: In data-sparse scenarios, uses LLM-assisted dataset generation with manual review and annotation
+- **Inference Method**: ONNX Runtime for efficient inference
+- **Classification Categories**:
+  - 0: Chat Q&A (chat)
+  - 1: Robotic arm control command (command)
+
+### Dynamic Model Selection
+
+The system uses LangChain v1.0's middleware mechanism to implement dynamic model routing:
+
+```python
+@wrap_model_call
+def dynamic_deepseek_routing(request: ModelRequest, handler) -> ModelResponse:
+    # Get user input
+    last_user = _get_last_user_text(messages)
+    
+    # BERT model prediction
+    pred, probs = predict(last_user)
+    
+    # Select model based on prediction result
+    if pred == 1:  # command
+        request.model = qwen_max_model
+    else:  # chat
+        request.model = qwen_fast_model
+    
+    return handler(request)
+```
+
+### Simulation Mode
+
+When the system cannot detect the `Arm_Lib` library, it automatically enters simulation mode:
+- ✅ Text classification function works normally
+- ✅ Dynamic model selection function works normally
+- ✅ Agent reasoning function works normally
+- ⚠️ Only unable to execute actual robotic arm control actions
+
+## 📊 Performance Metrics
+
+After optimization, system response time is significantly reduced:
+
+| Platform | Before Optimization | After Optimization | Improvement |
+|----------|---------------------|-------------------|-------------|
+| Jetson Orin Nano Super | 4.11 seconds | 2.38 seconds | **42%** ⬇️ |
+| RTX 4070 Ti Super | - | 1.47 seconds | - |
+
+✅ Passed all test cases
+
+## 📁 Project Structure
+
+```
+.
+├── langchain_onnx_qwen.py    # Main program file
+├── pyproject.toml            # Project dependency configuration
+├── .env                      # Environment variable configuration (create manually)
+├── bert_classifier.onnx      # Text classification model (download from Hugging Face)
+└── README.md                 # Project documentation
+```
+
+## 🔍 Code Structure
+
+### Main Modules
+
+1. **Text Classification Module** (Lines 33-59)
+   - `predict()`: Uses ONNX model for intent classification
+
+2. **Robotic Arm Control Layer** (Lines 73-233)
+   - `ArmController`: Encapsulates all robotic arm operations
+   - Supports simulation mode (automatically enabled without hardware)
+
+3. **Dynamic Routing Middleware** (Lines 284-313)
+   - `dynamic_deepseek_routing()`: Implements dynamic model selection
+
+4. **Main Program** (Lines 265-368)
+   - Initializes Agent and robotic arm controller
+   - Interactive loop for processing user input
+
+## 🛠️ Development Guide
+
+### Adding New Actions
+
+In the `ArmController` class:
+
+1. Add new action mapping in the `action_map` dictionary
+2. Implement corresponding action function (e.g., `action_xxx()`)
+3. Add new positions in the `positions` dictionary if needed
+
+### Adjusting Models
+
+Modify model initialization in the `main()` function:
+
+```python
+qwen_fast_model = ChatTongyi(model="qwen-flash")  # Chat model
+qwen_max_model = ChatTongyi(model="qwen3-max")    # Control model
+```
+
+## 📝 Notes
+
+1. **Model File**: Ensure `bert_classifier.onnx` file is in the project root directory
+2. **API Key**: Must correctly configure `DASHSCOPE_API_KEY` in the `.env` file
+3. **Hardware Connection**: If you have robotic arm hardware, ensure proper connection and install `Arm_Lib` library
+4. **Python Version**: Requires Python >= 3.13
+
+## 🤝 Contributing
+
+Welcome to submit Issues and Pull Requests!
+
+## 📄 License
+
+[Add your license information]
+
+## 🙏 Acknowledgments
+
+- LangChain team for the excellent framework
+- Hugging Face for models and tools
+- Alibaba Cloud Bailian platform for API services
+
+---
+
+**Project Author**: IsaraYu  
+**Last Updated**: 2024
+
+---
+
+<div id="chinese-version"></div>
+
+<div align="right">
+
+**Language / 语言**: [English](#) | [中文](#chinese-version)
+
+</div>
+
 # LangChain 1.0 动态模型控制机械臂系统
 
 基于 LangChain v1.0 构建的智能机械臂控制系统，实现了聊天问答与自动机械臂控制的多功能交互。系统通过中间件（middleware）的 `wrap_model_call` 机制实现动态模型选择，根据用户意图自动切换不同能力的模型，显著提升系统响应速度。
@@ -75,7 +332,6 @@ Agent 处理
 - Python >= 3.13
 - 支持 ONNX Runtime 的环境
 - （可选）亚博机械臂硬件及 Arm_Lib 库
-
 
 ## 📖 使用说明
 
@@ -239,4 +495,3 @@ qwen_max_model = ChatTongyi(model="qwen3-max")    # 控制模型
 
 **项目作者**：IsaraYu  
 **最后更新**：2024
-
