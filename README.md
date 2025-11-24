@@ -276,7 +276,7 @@ Welcome to submit Issues and Pull Requests!
 
 ```bash
 # 访问以下链接下载 bert_classifier.onnx
-https://huggingface.co/IsaraYu/Chat-Command_TextClassification
+https://huggingface.co/IsaraYu/Chat-Command_TextClassification/tree/main
 ```
 
 将下载的 `bert_classifier.onnx` 文件放置在项目根目录。
