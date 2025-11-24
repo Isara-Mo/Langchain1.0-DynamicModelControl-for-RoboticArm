@@ -25,7 +25,7 @@ Download the ONNX weights of the text classification model from Hugging Face:
 
 ```bash
 # Visit the following link to download bert_classifier.onnx
-https://huggingface.co/IsaraYu/Chat-Command_TextClassification
+https://huggingface.co/IsaraYu/Chat-Command_TextClassification/tree/main
 ```
 
 Place the downloaded `bert_classifier.onnx` file in the project root directory.
