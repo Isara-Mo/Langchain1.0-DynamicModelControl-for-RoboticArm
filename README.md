@@ -8,6 +8,7 @@
 
 An intelligent robotic arm control system built on LangChain v1.0, enabling multi-functional interaction between chat Q&A and automatic robotic arm control. The system implements dynamic model selection through the middleware's `wrap_model_call` mechanism, automatically switching between models of different capabilities based on user intent, significantly improving system response speed.
 
+The text classification model weights has been placed on https://huggingface.co/IsaraYu/Chat-Command_TextClassification/tree/main
 ## ✨ Features
 
 - 🤖 **Intelligent Intent Recognition**: Based on fine-tuned BERT model, accurately determines whether user input is "chat Q&A" or "robotic arm control command"
