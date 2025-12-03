@@ -237,10 +237,6 @@ qwen_max_model = ChatTongyi(model="qwen3-max")    # Control model
 
 Welcome to submit Issues and Pull Requests!
 
-## 📄 License
-
-[Add your license information]
-
 ## 🙏 Acknowledgments
 
 - LangChain team for the excellent framework
@@ -250,7 +246,7 @@ Welcome to submit Issues and Pull Requests!
 ---
 
 **Project Author**: IsaraYu  
-**Last Updated**: 2024
+**Last Updated**: 2025
 
 ---
 
@@ -494,10 +490,6 @@ qwen_max_model = ChatTongyi(model="qwen3-max")    # 控制模型
 
 欢迎提交 Issue 和 Pull Request！
 
-## 📄 许可证
-
-[添加您的许可证信息]
-
 ## 🙏 致谢
 
 - LangChain 团队提供的优秀框架
@@ -507,4 +499,4 @@ qwen_max_model = ChatTongyi(model="qwen3-max")    # 控制模型
 ---
 
 **项目作者**：IsaraYu  
-**最后更新**：2024
+**最后更新**：2025
