@@ -18,6 +18,12 @@ The text classification model weights has been placed on https://huggingface.co/
 - 🦾 **Robotic Arm Control**: Supports various predefined actions and combined workflows
 - 🔧 **Simulation Mode**: Can run text classification and model selection functions normally without physical robotic arm hardware
 
+## 🎬 Demo Video
+
+Below is a demo video for this project:
+
+<video controls src="https://github.com/user-attachments/assets/e5cc0431-a441-4a42-8a23-44a02efc1228" style="max-width:100%;height:auto;">Your browser does not support inline video. Please use the link below to watch.</video>
+
 ## 🚀 Quick Start
 
 ### 1. Download Model Weights
@@ -76,12 +82,6 @@ Agent Processing
   ↓
 Robotic Arm Execution (if command and successfully recognized)
 ```
-
-## 🎬 Demo Video
-
-Below is a demo video for this project (an inline player will appear if your browser/platform supports it):
-
-<video controls src="https://github.com/user-attachments/assets/e5cc0431-a441-4a42-8a23-44a02efc1228" style="max-width:100%;height:auto;">Your browser does not support inline video. Please use the link below to watch.</video>
 
 ## 📋 System Requirements
 
@@ -275,6 +275,12 @@ Welcome to submit Issues and Pull Requests!
 - 🦾 **机械臂控制**：支持多种预定义动作和组合流程
 - 🔧 **模拟模式**：在没有物理机械臂的环境下，可正常运行文本分类与模型选择功能
 
+## 🎬 演示视频
+
+下面是本项目的演示视频：
+
+<video controls src="https://github.com/user-attachments/assets/e5cc0431-a441-4a42-8a23-44a02efc1228" style="max-width:100%;height:auto;">您的浏览器不支持内嵌视频，请点击以下链接观看。</video>
+
 ## 🚀 快速开始
 
 ### 1. 下载模型权重
@@ -333,14 +339,6 @@ Agent 处理
   ↓
 机械臂执行（如为 command 且识别成功）
 ```
-
-## 🎬 演示视频
-
-下面是本项目的演示视频（若浏览器/平台支持，将显示内嵌播放器）：
-
-<video controls src="https://github.com/user-attachments/assets/e5cc0431-a441-4a42-8a23-44a02efc1228" style="max-width:100%;height:auto;">您的浏览器不支持内嵌视频，请点击以下链接观看。</video>
-
-
 
 ## 📋 系统要求
 
