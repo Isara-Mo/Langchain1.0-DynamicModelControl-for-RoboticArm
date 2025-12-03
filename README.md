@@ -77,6 +77,12 @@ Agent Processing
 Robotic Arm Execution (if command and successfully recognized)
 ```
 
+## 🎬 Demo Video
+
+Below is a demo video for this project (an inline player will appear if your browser/platform supports it):
+
+<video controls src="https://github.com/user-attachments/assets/e5cc0431-a441-4a42-8a23-44a02efc1228" style="max-width:100%;height:auto;">Your browser does not support inline video. Please use the link below to watch.</video>
+
 ## 📋 System Requirements
 
 - Python >= 3.13
@@ -327,6 +333,14 @@ Agent 处理
   ↓
 机械臂执行（如为 command 且识别成功）
 ```
+
+## 🎬 演示视频
+
+下面是本项目的演示视频（若浏览器/平台支持，将显示内嵌播放器）：
+
+<video controls src="https://github.com/user-attachments/assets/e5cc0431-a441-4a42-8a23-44a02efc1228" style="max-width:100%;height:auto;">您的浏览器不支持内嵌视频，请点击以下链接观看。</video>
+
+
 
 ## 📋 系统要求
 
